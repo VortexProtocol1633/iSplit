@@ -1,0 +1,13 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# Local capture/temp artifacts (not project source)
+.capture-tmp/

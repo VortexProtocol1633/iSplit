@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iSplit — Split Images & PDFs into Printable Tiles</title>
+  <meta name="description" content="iSplit splits large images and PDFs into smaller tiles sized for standard paper. Export multi-page PDFs or print directly — all in your browser." />
+  <link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%2306b6d4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='6' y='6' width='52' height='52' rx='10' fill='url(%23g)'/%3E%3Cg stroke='%23fff' stroke-width='2.5' fill='none' opacity='0.95'%3E%3Crect x='14' y='14' width='16' height='16' rx='2'/%3E%3Crect x='34' y='14' width='16' height='16' rx='2'/%3E%3Crect x='14' y='34' width='16' height='16' rx='2'/%3E%3Crect x='34' y='34' width='16' height='16' rx='2'/%3E%3C/g%3E%3Cpath d='M32 10 L32 54' stroke='%23fff' stroke-width='2' stroke-dasharray='3 3' opacity='0.7'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body class="tools-open">
+  <div class="bg-orbs" aria-hidden="true">
+    <span class="orb orb-1"></span><span class="orb orb-2"></span><span class="orb orb-3"></span>
+  </div>
+
+  <nav class="navbar glass" id="navbar">
+    <div class="nav-inner">
+      <a href="#top" class="brand" aria-label="iSplit home" data-tip="Go to the top of iSplit">
+        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+          <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs>
+          <rect x="6" y="6" width="52" height="52" rx="10" fill="url(#logoGrad)"/>
+          <g stroke="#fff" stroke-width="2.5" fill="none" opacity="0.95"><rect x="14" y="14" width="16" height="16" rx="2"/><rect x="34" y="14" width="16" height="16" rx="2"/><rect x="14" y="34" width="16" height="16" rx="2"/><rect x="34" y="34" width="16" height="16" rx="2"/></g>
+          <path d="M32 10 L32 54" stroke="#fff" stroke-width="2" stroke-dasharray="3 3" opacity="0.7"/>
+        </svg>
+        <span>iSplit</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" data-tip="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <button class="link-btn" id="openSidebarNav" data-tip="Open the tools sidebar with all splitting controls">Tools</button>
+        <button class="link-btn" id="openAboutNav" data-tip="Open the About &amp; Demo pop-up with guides and screenshots">About &amp; Demo</button>
+        <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode" data-tip="Switch between light and dark theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM11 1h2v3h-2V1Zm0 19h2v3h-2v-3ZM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93ZM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121Zm2.121-14.85 1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121ZM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121ZM23 11v2h-3v-2h3ZM4 11v2H1v-2h3Z"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7Zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top" class="app-main">
+    <section class="hero compact reveal">
+      <div class="hero-inner">
+        <h1>Split big images & PDFs into printable tiles</h1>
+        <p class="lead">Use the <strong>Tools sidebar</strong> to upload, choose segments/paper, adjust, and export. Everything runs locally in your browser.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="openSidebarHero" data-tip="Open the sidebar to access all iSplit controls">Open Tools</button>
+          <button class="btn btn-secondary" id="openAboutHero" data-tip="Open the About &amp; Demo pop-up">About &amp; Demo</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="app-shell" id="appShell">
+      <!-- Sidebar: all functionality -->
+      <aside class="sidebar glass" id="sidebar" aria-label="Tools sidebar">
+        <div class="sidebar-head">
+          <h2>Tools</h2>
+          <button class="icon-btn" id="closeSidebar" aria-label="Close sidebar" data-tip="Close the tools sidebar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.29 9.17 12 2.88 5.71 4.29 4.29l6.3 6.3 6.29-6.3z"/></svg>
+          </button>
+        </div>
+        <div class="sidebar-body">
+          <div class="field-group">
+            <label class="label" data-tip="Upload a JPG, PNG, or PDF. Files are processed locally and never uploaded.">Upload</label>
+            <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload image or PDF" data-tip="Drag and drop a file here, or click to browse your device">
+              <input type="file" id="fileInput" accept="image/jpeg,image/png,image/jpg,application/pdf" hidden />
+              <div class="drop-inner">
+                <svg viewBox="0 0 24 24" class="drop-icon" aria-hidden="true"><path fill="currentColor" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>Drop an image or PDF</strong> or click to browse</p>
+                <p class="muted small">JPG, PNG, PDF — processed locally</p>
+              </div>
+            </div>
+            <div id="pdfPageRow" class="row hidden">
+              <label for="pdfPage" data-tip="Choose which page of the PDF to split into tiles">PDF page</label>
+              <select id="pdfPage" data-tip="Select the PDF page to tile"></select>
+            </div>
+          </div>
+
+          <details open class="section section--paper">
+            <summary data-tip="Choose the printable paper size and page direction">
+              <span class="sec-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7 1.5V7h3.5L13 3.5Z"/></svg></span>
+              <span class="sec-title">Paper</span>
+              <span class="sec-chev" aria-hidden="true"></span>
+            </summary>
+            <div class="row">
+              <label for="paperSize" data-tip="Select a standard paper size or Custom to enter your own dimensions">Size</label>
+              <select id="paperSize" data-tip="Paper size used for each tile/page">
+                <option value="A4" selected>A4</option>
+                <option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option>
+                <option value="A3">A3</option><option value="A5">A5</option><option value="A6">A6</option>
+                <option value="Letter">Letter</option><option value="Legal">Legal</option><option value="Tabloid">Tabloid</option>
+                <option value="Custom">Custom</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <span class="label" data-tip="Portrait = taller page. Landscape = wider page.">Orientation</span>
+              <div class="orient-toggle" role="group" aria-label="Page orientation">
+                <button type="button" class="orient-btn active" id="orientPortrait" data-orient="portrait" data-tip="Portrait: the page is taller than it is wide (e.g., 210 × 297 mm for A4)">
+                  <span class="page-icon portrait" aria-hidden="true"></span>
+                  <span>Portrait<br/><small>Taller page</small></span>
+                </button>
+                <button type="button" class="orient-btn" id="orientLandscape" data-orient="landscape" data-tip="Landscape: the page is wider than it is tall (e.g., 297 × 210 mm for A4)">
+                  <span class="page-icon landscape" aria-hidden="true"></span>
+                  <span>Landscape<br/><small>Wider page</small></span>
+                </button>
+              </div>
+              <p class="muted small" id="orientHelp">Portrait = taller page. Current: <strong id="orientDims">210 × 297 mm</strong>.</p>
+              <input type="hidden" id="orientation" value="portrait" />
+            </div>
+
+            <div id="customPaper" class="row hidden two">
+              <div><label for="customW" data-tip="Custom paper width in the selected units">Width</label><input type="number" id="customW" min="1" step="0.1" value="210" data-tip="Enter the paper width" /></div>
+              <div><label for="customH" data-tip="Custom paper height in the selected units">Height</label><input type="number" id="customH" min="1" step="0.1" value="297" data-tip="Enter the paper height" /></div>
+            </div>
+            <div class="row">
+              <label for="unit" data-tip="Units used for paper, poster size, margins, gap, and overlap">Units</label>
+              <select id="unit" data-tip="Choose millimeters, centimeters, or inches"><option value="mm" selected>mm</option><option value="cm">cm</option><option value="in">in</option></select>
+            </div>
+          </details>
+
+          <details class="section section--grid">
+            <summary data-tip="Control how many tiles/segments your file is split into">
+              <span class="sec-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4V4Zm9 0h7v7h-7V4ZM4 13h7v7H4v-7Zm9 0h7v7h-7v-7Z"/></svg></span>
+              <span class="sec-title">Grid / Segments</span>
+              <span class="sec-chev" aria-hidden="true"></span>
+            </summary>
+            <div class="row">
+              <label for="gridMode" data-tip="Segments: pick a total count. Manual: set rows × columns. Auto: calculate from a target poster size.">Mode</label>
+              <select id="gridMode" data-tip="Choose how the grid is calculated">
+                <option value="segments" selected>Segments (total count)</option>
+                <option value="manual">Manual rows × columns</option>
+                <option value="auto">Auto (from poster size)</option>
+              </select>
+            </div>
+            <div id="segmentsGrid" class="row">
+              <label for="segments" data-tip="How many pieces to divide the file into. iSplit chooses the best rows × columns for the shape.">Number of segments</label>
+              <input type="number" id="segments" min="1" max="400" step="1" value="4" data-tip="Enter the total number of tiles/segments (e.g., 4, 6, 9)" />
+              <p class="muted small" id="segmentsInfo">iSplit will pick the best rows × columns.</p>
+            </div>
+            <div id="manualGrid" class="row two hidden">
+              <div><label for="rows" data-tip="Number of tile rows (vertical divisions)">Rows</label><input type="number" id="rows" min="1" max="100" step="1" value="2" data-tip="Rows" /></div>
+              <div><label for="cols" data-tip="Number of tile columns (horizontal divisions)">Columns</label><input type="number" id="cols" min="1" max="100" step="1" value="2" data-tip="Columns" /></div>
+            </div>
+            <div id="autoGrid" class="row two hidden">
+              <div><label for="posterW" data-tip="Target final poster width in the selected units">Poster width</label><input type="number" id="posterW" min="1" step="0.1" value="594" data-tip="Poster width" /></div>
+              <div><label for="posterH" data-tip="Target final poster height in the selected units">Poster height</label><input type="number" id="posterH" min="1" step="0.1" value="841" data-tip="Poster height" /></div>
+            </div>
+            <p class="muted small" id="gridInfo">Load an image to calculate the grid.</p>
+          </details>
+
+          <details class="section section--adjust">
+            <summary data-tip="Zoom, move, crop, and rotate the source image/PDF page">
+              <span class="sec-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h11a3 3 0 1 0 0-2H3v2Zm18 10H10a3 3 0 1 0 0 2h11v-2ZM8 11h13v2H8v-2Zm-5 0h3v2H3v-2Z"/><circle cx="17" cy="6" r="3"/><circle cx="7" cy="18" r="3"/></svg></span>
+              <span class="sec-title">Image adjustments</span>
+              <span class="sec-chev" aria-hidden="true"></span>
+            </summary>
+            <div class="row"><label for="zoom" data-tip="Scale the image up or down. In the preview, hold Ctrl and use the mouse wheel to zoom.">Zoom <span id="zoomVal" class="val">100%</span></label><input type="range" id="zoom" min="10" max="300" value="100" data-tip="Drag to zoom, or hold Ctrl + mouse wheel over the preview" /></div>
+            <div class="row two">
+              <div><label for="panX" data-tip="Move the image left/right. In the preview, hold Ctrl + left mouse button and drag to pan.">Pan X <span id="panXVal" class="val">0</span></label><input type="range" id="panX" min="-100" max="100" value="0" data-tip="Pan horizontally (or Ctrl + left-drag in preview)" /></div>
+              <div><label for="panY" data-tip="Move the image up/down. In the preview, hold Ctrl + left mouse button and drag to pan.">Pan Y <span id="panYVal" class="val">0</span></label><input type="range" id="panY" min="-100" max="100" value="0" data-tip="Pan vertically (or Ctrl + left-drag in preview)" /></div>
+            </div>
+            <p class="muted small" style="margin:0.1rem 0 0">Preview: <strong>Ctrl + mouse wheel</strong> to zoom, <strong>Ctrl + left-drag</strong> to move.</p>
+            <div class="row"><label for="rotate" data-tip="Rotate the source by 90° steps before tiling">Rotate</label>
+              <select id="rotate" data-tip="Rotate the source image"><option value="0">0°</option><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select>
+            </div>
+            <div class="row two">
+              <div><label for="cropX" data-tip="Crop from the left edge (percent of source width)">Crop X %</label><input type="number" id="cropX" min="0" max="90" step="1" value="0" data-tip="Crop left" /></div>
+              <div><label for="cropY" data-tip="Crop from the top edge (percent of source height)">Crop Y %</label><input type="number" id="cropY" min="0" max="90" step="1" value="0" data-tip="Crop top" /></div>
+            </div>
+            <div class="row two">
+              <div><label for="cropW" data-tip="Width of the cropped area (percent)">Crop W %</label><input type="number" id="cropW" min="10" max="100" step="1" value="100" data-tip="Crop width" /></div>
+              <div><label for="cropH" data-tip="Height of the cropped area (percent)">Crop H %</label><input type="number" id="cropH" min="10" max="100" step="1" value="100" data-tip="Crop height" /></div>
+            </div>
+          </details>
+
+          <details class="section section--layout">
+            <summary data-tip="Margins, spacing, and assembly guides drawn on each tile">
+              <span class="sec-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9V5a2 2 0 0 1 2-2h4v2H5v4H3Zm18 0h-2V5h-4V3h4a2 2 0 0 1 2 2v4ZM3 15h2v4h4v2H5a2 2 0 0 1-2-2v-4Zm16 4v-4h2v4a2 2 0 0 1-2 2h-4v-2h4ZM7 7h10v10H7V7Zm3 3h4v4h-4v-4Z"/></svg></span>
+              <span class="sec-title">Layout &amp; guides</span>
+              <span class="sec-chev" aria-hidden="true"></span>
+            </summary>
+            <div class="row"><label for="margin" data-tip="White margin inside each printed page (keeps content away from printer edges)">Margin <span id="marginVal" class="val">10 mm</span></label><input type="range" id="margin" min="0" max="50" value="10" data-tip="Page margin" /></div>
+            <div class="row"><label for="gap" data-tip="Adds spacing between adjacent tile capture regions (leaves a gap in the image between pages). Overlap does the opposite.">Gap <span id="gapVal" class="val">0 mm</span></label><input type="range" id="gap" min="0" max="30" value="0" data-tip="Gap between tiles (image spacing)" /></div>
+            <div class="row"><label for="overlap" data-tip="Shared image area between adjacent tiles to make alignment/taping easier">Overlap <span id="overlapVal" class="val">0 mm</span></label><input type="range" id="overlap" min="0" max="30" value="0" data-tip="Overlap for assembly" /></div>
+            <div class="checks">
+              <label data-tip="Draw a solid border around the printable area of each tile"><input type="checkbox" id="borders" checked /> Tile borders</label>
+              <label data-tip="Add corner crop marks outside the printable area for trimming"><input type="checkbox" id="cropMarks" /> Crop marks</label>
+              <label data-tip="Print row-column and sequence numbers on each tile (preview reference)"><input type="checkbox" id="tileNumbers" checked /> Tile numbers</label>
+              <label data-tip="Draw dashed cut guides around each tile"><input type="checkbox" id="cutGuides" /> Cut guides</label>
+              <label data-tip="Remove tile number/watermark marks (e.g., 1-1, 1/4) from the corners when downloading the PDF or printing"><input type="checkbox" id="hideExportMarks" checked /> Hide tile numbers on PDF/print</label>
+            </div>
+          </details>
+
+          <details class="section section--quality">
+            <summary data-tip="Control export resolution and image compression">
+              <span class="sec-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l1.9 5.1L19 9l-5.1 1.9L12 16l-1.9-5.1L5 9l5.1-1.9L12 2Zm7 12l1.1 3 3 1.1-3 1.1L19 22l-1.1-2.8-3-1.1 3-1.1L19 14ZM5 14l.9 2.4L8 17l-2.1.9L5 20l-.9-2.1L2 17l2.1-.6L5 14Z"/></svg></span>
+              <span class="sec-title">Output quality</span>
+              <span class="sec-chev" aria-hidden="true"></span>
+            </summary>
+            <div class="row"><label for="dpi" data-tip="Dots per inch for rendering/export. 300 DPI is best for print; lower is faster/smaller.">DPI</label>
+              <select id="dpi" data-tip="Export resolution"><option value="72">72 (screen)</option><option value="150">150 (draft)</option><option value="300" selected>300 (print)</option></select>
+            </div>
+            <div class="row"><label for="quality" data-tip="JPEG compression quality for PDF/print images (higher = better quality, larger file)">JPEG quality <span id="qualityVal" class="val">0.92</span></label><input type="range" id="quality" min="0.5" max="1" step="0.01" value="0.92" data-tip="JPEG quality" /></div>
+          </details>
+
+          <div class="actions">
+            <button class="btn btn-primary" id="downloadBtn" disabled data-tip="Export every tile as a multi-page PDF">Download PDF</button>
+            <button class="btn btn-secondary" id="downloadSelectedBtn" disabled data-tip="Export only the tiles you kept selected in the preview">Selected tiles</button>
+            <button class="btn btn-secondary" id="printBtn" disabled data-tip="Open the browser print dialog with correct page sizing (use Actual size/100%)">Print</button>
+            <button class="btn btn-ghost" id="resetBtn" data-tip="Restore all settings to their defaults and clear saved preferences">Reset settings</button>
+          </div>
+          <p class="muted small tip">Tip: <strong>Ctrl + mouse wheel</strong> to zoom, <strong>Ctrl + left-drag</strong> to move the image. Click tiles to include/exclude them.</p>
+        </div>
+      </aside>
+      <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+      <!-- Main preview -->
+      <section class="viewer" aria-label="Preview viewer">
+        <div class="viewer-bar glass">
+          <div class="viewer-left">
+            <button class="btn btn-secondary btn-sm" id="openSidebarMain" data-tip="Open or close the tools sidebar">☰ Tools</button>
+            <h2>Preview</h2>
+          </div>
+          <div class="viewer-right">
+            <span id="fileMeta" class="muted small">No file loaded</span>
+            <button class="btn btn-ghost btn-sm" id="selectAllBtn" disabled data-tip="Include all tiles in export/print">Select all</button>
+            <button class="btn btn-ghost btn-sm" id="clearSelBtn" disabled data-tip="Exclude all tiles (then click tiles to re-include specific ones)">Clear selection</button>
+          </div>
+        </div>
+        <div class="progress-wrap hidden" id="progressWrap" aria-live="polite">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <span id="progressText" class="small">Working…</span>
+        </div>
+        <div class="preview-stage fit" id="previewStage" data-tip="Preview: Ctrl + mouse wheel to zoom, Ctrl + left-drag to pan, click tiles to include/exclude. All segments stay visible.">
+          <div class="preview-empty" id="previewEmpty">
+            <p><strong>Your tiled preview will appear here.</strong></p>
+            <p class="muted small">Open <em>Tools</em> to upload a file. The grid matches the exported PDF.</p>
+          </div>
+          <div class="preview-canvas-wrap hidden" id="previewWrap">
+            <canvas id="previewCanvas"></canvas>
+            <div class="grid-overlay" id="gridOverlay" aria-label="Tile grid"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <button class="link-btn muted small" id="openAboutFooter" data-tip="Open About &amp; Demo">About &amp; Demo</button>
+    </div>
+  </footer>
+
+  <!-- About & Demo Modal (pop-up) -->
+  <div class="modal hidden" id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" aria-hidden="true">
+    <div class="modal-backdrop" id="aboutBackdrop"></div>
+    <div class="modal-dialog glass">
+      <div class="modal-head">
+        <h2 id="aboutTitle">About iSplit &amp; Demo</h2>
+        <button class="icon-btn" id="closeAbout" aria-label="Close" data-tip="Close this pop-up"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.29 9.17 12 2.88 5.71 4.29 4.29l6.3 6.3 6.29-6.3z"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <p class="lead">iSplit turns oversized images and PDFs into neatly tiled pages you can print on any standard printer — privately, in your browser.</p>
+
+        <h3>Guided demo (how to use the buttons)</h3>
+        <p class="muted small">Real screenshots of iSplit, captured while walking through each button below.</p>
+        <div class="demo-grid">
+          <figure class="demo-card">
+            <figcaption><strong>1. Upload</strong> — Open <em>Tools</em> and drop/click to load a JPG, PNG, or PDF (local only).</figcaption>
+            <img class="shot" src="assets/about-1-upload.png" alt="Screenshot: the Upload dropzone in the iSplit tools sidebar" width="640" height="480" loading="lazy" />
+          </figure>
+          <figure class="demo-card">
+            <figcaption><strong>2. Paper &amp; orientation</strong> — Pick a paper size, then <strong>Portrait</strong> (taller) or <strong>Landscape</strong> (wider); the dimensions update below.</figcaption>
+            <img class="shot" src="assets/about-2-orientation.png" alt="Screenshot: the Paper card with Portrait and Landscape orientation buttons" width="640" height="480" loading="lazy" />
+          </figure>
+          <figure class="demo-card">
+            <figcaption><strong>3. Grid / Segments</strong> — Choose “Segments”, enter a total (e.g., 6). iSplit picks the best rows × columns.</figcaption>
+            <img class="shot" src="assets/about-3-segments.png" alt="Screenshot: the Grid / Segments card set to 6 segments" width="640" height="480" loading="lazy" />
+          </figure>
+          <figure class="demo-card">
+            <figcaption><strong>4. Adjust &amp; guides</strong> — Zoom (slider or <strong>mouse wheel</strong>), pan, crop, rotate; add margins, overlap, borders, crop marks, numbers.</figcaption>
+            <img class="shot" src="assets/about-4-adjust.png" alt="Screenshot: Image adjustments with zoom and pan sliders" width="640" height="480" loading="lazy" />
+          </figure>
+          <figure class="demo-card">
+            <figcaption><strong>5. Select tiles</strong> — Click tiles in the preview to include/exclude them, then export selected tiles or print.</figcaption>
+            <img class="shot" src="assets/about-5-tiles.png" alt="Screenshot: the live preview with one tile excluded" width="640" height="480" loading="lazy" />
+          </figure>
+          <figure class="demo-card">
+            <figcaption><strong>6. Export / Print</strong> — Download a multi-page PDF (all or selected) or Print with correct <code>@page</code> sizing (use Actual size/100%).</figcaption>
+            <img class="shot" src="assets/about-6-export.png" alt="Screenshot: Download PDF, Selected tiles, Print and Reset buttons" width="640" height="480" loading="lazy" />
+          </figure>
+        </div>
+
+        <h3>Features &amp; use cases</h3>
+        <ul class="compact-list">
+          <li><strong>Images &amp; PDFs:</strong> JPG/PNG and multi-page PDFs (choose a page). All local.</li>
+          <li><strong>Segments, Manual, or Auto grid:</strong> Pick a total segment count, exact rows × columns, or auto-calculate from a poster size.</li>
+          <li><strong>Clear paper/orientation:</strong> Standard/custom sizes, units, and an explicit Portrait (taller) / Landscape (wider) toggle with dimensions.</li>
+          <li><strong>Precise control:</strong> Zoom (slider or mouse wheel), pan, crop, rotate, margins, gap, overlap, borders, crop marks, numbers, cut guides.</li>
+          <li><strong>Clickable tiles &amp; quality output:</strong> Exclude tiles, set DPI/JPEG quality, export multi-page PDF or print with correct <code>@page</code> sizing.</li>
+          <li><strong>Use cases:</strong> Posters, banners, blueprints, maps, wall art, sewing/craft patterns. <strong>Tip:</strong> print at 100% / Actual size and use overlap for assembly.</li>
+        </ul>
+        <h3>Privacy</h3>
+        <p class="muted">Files are processed locally with in-browser libraries and never sent anywhere. Settings are stored only in your browser’s local storage (use Reset to clear).</p>
+
+        <div class="creator-modal">
+          <p class="eyebrow">From the Creator</p>
+          <div class="creator-modal-grid">
+            <img src="assets/md-masrur-masuk-shopnil.jpg" alt="Portrait of Md Masrur Masuk Shopnil, creator of iSplit" width="800" height="1000" loading="lazy" />
+            <div>
+              <h3>Md Masrur Masuk Shopnil</h3>
+              <p class="role">Engineer by training · designer by stubbornness</p>
+              <p>Hi — I'm the person behind iSplit. I did not go to design school; I studied at MIST (Military Institute of Science and Technology, Bangladesh), which taught me a lot about engineering and approximately nothing about colour theory. Everything you see here is self-taught, mildly obsessive, hobbyist-grade web design. The themes were mostly me asking “does this indigo go with this cyan?” and then reloading the page forty times.</p>
+              <p>What I do know is the special kind of tedium that comes from needing one poster on a printer that only takes A4. The artwork is ninety centimetres wide, the print dialog insists on scaling it to fit, and by the time you have cut and taped six pages together the seams are off by a few millimetres and the title has a stripe through it. One day I got fed up enough to build a tool instead of complaining about it.</p>
+              <p>iSplit takes whatever you have — a JPG, a PNG, a multi-page PDF — and slices it into clean, printable tiles at the paper size you actually own, with margins, overlap and crop marks so the pieces line up. It previews the grid live, lets you switch off the tiles you don't need, and exports the whole thing as one PDF or straight to your printer. Like a very patient print technician who never trims the wrong edge.</p>
+              <p>No accounts, no server, no database. Everything happens in your browser, and your files never leave your machine. It is the smallest tool that does the job, which is roughly the only kind of tool I trust with a 200-megapixel scan of somebody's family photo.</p>
+              <p>It started as a weekend fix for my own wall map and quietly turned into… this. I hope it saves you as much time (and hand-cramp) as it's saved me.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+  <!-- Hidden print container -->
+  <div id="printArea" aria-hidden="true"></div>
+</body>
+</html>
