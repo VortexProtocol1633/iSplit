@@ -18,6 +18,8 @@
     closeSidebar:$('closeSidebar'), sidebar:$('sidebar'), sidebarBackdrop:$('sidebarBackdrop'),
     openAboutNav:$('openAboutNav'), openAboutHero:$('openAboutHero'), openAboutFooter:$('openAboutFooter'),
     aboutModal:$('aboutModal'), aboutBackdrop:$('aboutBackdrop'), closeAbout:$('closeAbout'),
+    openCreatorNav:$('openCreatorNav'), openCreatorHero:$('openCreatorHero'), openCreatorFooter:$('openCreatorFooter'),
+    creatorModal:$('creatorModal'), creatorBackdrop:$('creatorBackdrop'), closeCreator:$('closeCreator'),
     dropzone:$('dropzone'), fileInput:$('fileInput'), pdfPageRow:$('pdfPageRow'), pdfPage:$('pdfPage'),
     paperSize:$('paperSize'), orientation:$('orientation'), orientPortrait:$('orientPortrait'), orientLandscape:$('orientLandscape'),
     orientHelp:$('orientHelp'), orientDims:$('orientDims'), customPaper:$('customPaper'),
@@ -439,6 +441,14 @@
     els.aboutModal.classList.add('hidden'); els.aboutModal.setAttribute('aria-hidden','true');
     if(lastFocus && lastFocus.focus) lastFocus.focus();
   }
+  function openCreator(){
+    lastFocus=document.activeElement; els.creatorModal.classList.remove('hidden'); els.creatorModal.setAttribute('aria-hidden','false');
+    els.closeCreator.focus();
+  }
+  function closeCreator(){
+    els.creatorModal.classList.add('hidden'); els.creatorModal.setAttribute('aria-hidden','true');
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
 
   // ---------- Tooltips ----------
   let tipTimer=null;
@@ -506,7 +516,10 @@
     [els.openAboutNav,els.openAboutHero,els.openAboutFooter].forEach(b=>b&&b.addEventListener('click',()=>{ closeNav(); openAbout(); }));
     els.closeAbout.addEventListener('click',closeAbout);
     els.aboutBackdrop.addEventListener('click',closeAbout);
-    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ closeAbout(); if(window.innerWidth<=900) closeSidebar(); hideTip(); } });
+    [els.openCreatorNav,els.openCreatorHero,els.openCreatorFooter].forEach(b=>b&&b.addEventListener('click',()=>{ closeNav(); openCreator(); }));
+    els.closeCreator.addEventListener('click',closeCreator);
+    els.creatorBackdrop.addEventListener('click',closeCreator);
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ closeAbout(); closeCreator(); if(window.innerWidth<=900) closeSidebar(); hideTip(); } });
 
     function closeNav(){ els.navLinks.classList.remove('open'); els.navToggle.setAttribute('aria-expanded','false'); }
     els.navToggle.addEventListener('click',()=>{ const open=els.navLinks.classList.toggle('open'); els.navToggle.setAttribute('aria-expanded',open?'true':'false'); });

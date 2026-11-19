@@ -237,6 +237,10 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius
 .creator-modal .role { margin: 0 0 0.65rem; font-size: 0.82rem; color: var(--muted); }
 .creator-modal p { margin: 0 0 0.6rem; font-size: 0.9rem; line-height: 1.6; color: var(--muted); }
 .creator-modal p:last-child { margin-bottom: 0; }
+.creator-modal.plain { margin-top: 0; padding: 0; border: 0; border-radius: 0; background: transparent; overflow: visible; }
+.creator-modal.plain::before { display: none; }
+.creator-modal .creator-link { margin: 0 0 0.75rem; font-size: 0.88rem; font-weight: 600; }
+.creator-modal .creator-link a { color: var(--accent); word-break: break-all; }
 @media (max-width: 620px) {
   .creator-modal-grid { grid-template-columns: 1fr; }
   .creator-modal img { max-width: 170px; }
