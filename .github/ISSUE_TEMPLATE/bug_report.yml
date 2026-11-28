@@ -1,0 +1,98 @@
+name: Bug report
+description: Something in iSplit is broken, inaccurate, or visually wrong.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please **do not attach private documents** — use a synthetic test file that reproduces the problem.
+
+        For security vulnerabilities, follow [SECURITY.md](https://github.com/VortexProtocol1633/iSplit/blob/main/SECURITY.md) instead of opening an issue.
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Which browser shows the problem?
+      options:
+        - Chrome / Chromium
+        - Microsoft Edge
+        - Firefox
+        - Safari
+        - Other (describe below)
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Browser version and operating system
+      placeholder: "e.g. Chrome 158 on Windows 11, Safari 19 on macOS 15"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: input-type
+    attributes:
+      label: Input type
+      description: What kind of file were you tiling?
+      options:
+        - JPG
+        - PNG
+        - Single-page PDF
+        - Multi-page PDF
+        - No file loaded / happened before upload
+        - Not applicable
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include paper size, orientation, units, and grid mode if they matter.
+      placeholder: |
+        1. Open the live app at ...
+        2. Set paper to A4 landscape, units mm
+        3. Choose Segments = 6
+        4. Click Download PDF
+        5. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Screenshots or a short screen recording help a lot.
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console errors or diagnostics
+      description: Open DevTools → Console and paste any relevant errors. Redact local file paths if needed.
+      render: text
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I reproduced this on the latest live app or current `main`.
+          required: true
+        - label: I did not attach any private or sensitive document.
+          required: true
+        - label: I searched existing issues before opening this report.
+          required: true

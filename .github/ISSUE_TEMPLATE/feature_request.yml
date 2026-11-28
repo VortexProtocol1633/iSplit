@@ -1,0 +1,61 @@
+name: Feature request
+description: Suggest a paper size, export option, workflow, or accessibility improvement.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        iSplit is intentionally small and stays client-side with no build step. Before proposing a feature, consider whether it fits that constraint.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Describe the poster, map, blueprint, craft project, or workflow that iSplit currently makes difficult.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What should iSplit do? Mockups, sketches, or examples from other tools are welcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any workarounds you currently use, or simpler options you would accept.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Paper / sizing
+        - Grid / segmentation
+        - Image adjustments
+        - Assembly guides
+        - PDF export / print
+        - Accessibility / keyboard
+        - Performance / large files
+        - UI / themes
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Constraints
+      options:
+        - label: This feature can work without a backend or file uploads.
+          required: true
+        - label: I searched existing issues and discussions for this idea.
+          required: true

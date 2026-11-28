@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Try the live app
+    url: https://vortexprotocol1633.github.io/iSplit/
+    about: Reproduce the issue on the hosted version before reporting it.
+  - name: Report a security vulnerability
+    url: https://github.com/VortexProtocol1633/iSplit/security/advisories/new
+    about: Please report vulnerabilities privately, not as public issues.
+  - name: Read the usage guide
+    url: https://github.com/VortexProtocol1633/iSplit#how-to-use-it
+    about: Printing tips, shortcuts, and explanations of gap, overlap, and DPI.

@@ -9,5 +9,16 @@ desktop.ini
 .vscode/
 *.code-workspace
 
+# Dependencies and local tooling
+node_modules/
+.cache/
+coverage/
+*.log
+
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+
 # Local capture/temp artifacts (not project source)
 .capture-tmp/

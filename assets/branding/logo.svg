@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="256" height="256" role="img" aria-labelledby="title desc">
+  <title id="title">iSplit logo</title>
+  <desc id="desc">A rounded indigo-to-cyan square divided into four white tiles, with a dashed vertical split line.</desc>
+  <defs>
+    <linearGradient id="brandGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="11" fill="url(#brandGradient)"/>
+  <g stroke="#fff" stroke-width="2.5" fill="none" opacity="0.95">
+    <rect x="13" y="13" width="16" height="16" rx="2"/>
+    <rect x="35" y="13" width="16" height="16" rx="2"/>
+    <rect x="13" y="35" width="16" height="16" rx="2"/>
+    <rect x="35" y="35" width="16" height="16" rx="2"/>
+  </g>
+  <path d="M32 9 L32 55" stroke="#fff" stroke-width="2" stroke-dasharray="3 3" opacity="0.7"/>
+</svg>
